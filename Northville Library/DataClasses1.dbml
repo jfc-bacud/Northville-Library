@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Northville" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=Northville;Integrated Security=True" SettingsObjectName="Northville_Library.Properties.Settings" SettingsPropertyName="NorthvilleConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Book" Member="Books">
+    <Type Name="Book">
+      <Column Name="Book_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Book_Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Author" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_ISBN" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_PublicationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Genre" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Book_Transaction" Member="Transactions" ThisKey="Book_ID" OtherKey="Book_ID" Type="Transaction" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="Course_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Course_Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Student" Member="Students" ThisKey="Course_ID" OtherKey="Course_ID" Type="Student" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fines" Member="Fines">
+    <Type Name="Fine">
+      <Column Name="Fines_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Transaction_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Fine_Amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Days_OverDue" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Fines_Status" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Transaction_Fine" Member="Transaction" ThisKey="Transaction_ID" OtherKey="Transaction_ID" Type="Transaction" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Role_Name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_Staff" Member="Staffs" ThisKey="Role_ID" OtherKey="Role_ID" Type="Staff" />
+      <Association Name="Role_Student" Member="Students" ThisKey="Role_ID" OtherKey="Role_ID" Type="Student" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staffs">
+    <Type Name="Staff">
+      <Column Name="Staff_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Password" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_ContactNum" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Email" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_Staff" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="Student_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Student_LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Student_Password" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Student_ContactNum" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Student_Email" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Course_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Transaction" Member="Transactions" ThisKey="Student_ID" OtherKey="Student_ID" Type="Transaction" />
+      <Association Name="Student_VisitLog" Member="VisitLogs" ThisKey="Student_ID" OtherKey="Student_ID" Type="VisitLog" />
+      <Association Name="Course_Student" Member="Course" ThisKey="Course_ID" OtherKey="Course_ID" Type="Course" IsForeignKey="true" />
+      <Association Name="Role_Student" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transactions" Member="Transactions">
+    <Type Name="Transaction">
+      <Column Name="Transaction_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Borrow_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Due_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Return_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Transaction_Status" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Transaction_Fine" Member="Fines" ThisKey="Transaction_ID" OtherKey="Transaction_ID" Type="Fine" />
+      <Association Name="Book_Transaction" Member="Book" ThisKey="Book_ID" OtherKey="Book_ID" Type="Book" IsForeignKey="true" />
+      <Association Name="Student_Transaction" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VisitLog" Member="VisitLogs">
+    <Type Name="VisitLog">
+      <Column Name="Visit_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Visit_DateTime" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Student_VisitLog" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
