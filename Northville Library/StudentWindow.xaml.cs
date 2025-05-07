@@ -28,7 +28,7 @@ namespace Northville_Library
 
         public void retrieveInformation()
         {
-            MessageBox.Show()
+
         }
     }
 }

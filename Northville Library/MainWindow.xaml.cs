@@ -147,6 +147,12 @@ namespace Northville_Library
                     break;
             }
         }
+        private void CreateBT_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNew newUser = new CreateNew();
+            newUser.Show();
+            this.Close();
 
+        }
     }
 }

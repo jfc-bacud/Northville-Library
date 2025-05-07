@@ -14,8 +14,10 @@
             <Label Content="Password" Margin="150,10,150,0" FontFamily="Yu Gothic UI" FontSize="16"/>
             <TextBox x:Name="PasswordTB" HorizontalAlignment="Center" Width="220" Height="30" FontSize="18"/>
             <StackPanel></StackPanel>
-            <Button x:Name="LoginBT" Content="Login" Margin="0,20,0,0" HorizontalAlignment="Center" Width="100" Height="30" Click="LoginBT_Click"/>
-            <Button x:Name="CreateBT" Content="Login" Margin="0,20,0,0" Width="100" Height="30" Click="LoginBT_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="LoginBT" Content="Login" Margin="0,20,20,0" HorizontalAlignment="Center" Width="100" Height="30" Click="LoginBT_Click"/>
+                <Button x:Name="CreateBT" Content="Create User" Margin="0,20,0,0" Width="100" Height="30" Click="CreateBT_Click"/>
+            </StackPanel>
 
         </StackPanel>
     </Grid>

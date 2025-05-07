@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="StudentWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen">
     <Grid>
-        <StackPanel>
+        
+        
+        
+        <!--<StackPanel>
             <Label Content="Student ID" HorizontalAlignment="Center"/>
             <TextBox x:Name="idTB" Width="220" Height="30" FontSize="18"/>
             <Label Content="Student First Name" HorizontalAlignment="Center"/>
@@ -20,6 +23,6 @@
             <TextBox x:Name="contactTB" Width="220" Height="30" FontSize="18"/>
             <Label Content="Student Email" HorizontalAlignment="Center"/>
             <TextBox x:Name="emailTB" Width="220" Height="30" FontSize="18"/>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>
