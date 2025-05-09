@@ -59,6 +59,15 @@
     <Compile Include="CreateNew.xaml.cs">
       <DependentUpon>CreateNew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StudentWindow Pages\StudentBooks.xaml.cs">
+      <DependentUpon>StudentBooks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudentWindow Pages\StudentProfile.xaml.cs">
+      <DependentUpon>StudentProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StudentWindow Pages\StudentTransaction.xaml.cs">
+      <DependentUpon>StudentTransaction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
@@ -83,6 +92,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StudentWindow Pages\StudentBooks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudentWindow Pages\StudentProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StudentWindow Pages\StudentTransaction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

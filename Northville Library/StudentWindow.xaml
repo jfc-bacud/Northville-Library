@@ -7,22 +7,33 @@
         mc:Ignorable="d"
         Title="StudentWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen">
     <Grid>
-        
-        
-        
-        <!--<StackPanel>
-            <Label Content="Student ID" HorizontalAlignment="Center"/>
-            <TextBox x:Name="idTB" Width="220" Height="30" FontSize="18"/>
-            <Label Content="Student First Name" HorizontalAlignment="Center"/>
-            <TextBox x:Name="fnameTB" Width="220" Height="30" FontSize="18"/>
-            <Label Content="Student Last Name" HorizontalAlignment="Center"/>
-            <TextBox x:Name="lnameTB" Width="220" Height="30" FontSize="18"/>
-            <Label Content="Student Password" HorizontalAlignment="Center"/>
-            <TextBox x:Name="passwordTB" Width="220" Height="30" FontSize="18"/>
-            <Label Content="Student Contact" HorizontalAlignment="Center"/>
-            <TextBox x:Name="contactTB" Width="220" Height="30" FontSize="18"/>
-            <Label Content="Student Email" HorizontalAlignment="Center"/>
-            <TextBox x:Name="emailTB" Width="220" Height="30" FontSize="18"/>
-        </StackPanel>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="413"/>
+            <ColumnDefinition Width="827"/>
+        </Grid.ColumnDefinitions>
+
+        <Frame x:Name="pageFrame" Grid.Column="1" Background="#800000" NavigationUIVisibility="Hidden"/>
+        <StackPanel Grid.Column="0">
+            <Image Source="/Assets/Northville Logo.png" Margin="26,26,26,0" Height="212" Width="291"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Welcome" FontSize="30"/>
+                <Label x:Name="unameLBL" Content="" FontSize="30"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Label Content="Student ID: " FontSize="15"/>
+                <Label x:Name="studentidLBL" Content="" FontSize="15"/>
+                <Label Content="Role: " FontSize="15"/>
+                <Label x:Name="roleLBL" Content="" FontSize="15"/>
+            </StackPanel>
+            <Button x:Name="profileBTN" Content="Profile" Width="200" Height="35" Margin="0,0,0,20" Click="profileBTN_Click"/>
+            <Button x:Name="transactionBTN" Content="Transactions &amp; Fines" Width="200" Height="35" Margin="0,0,0,20" Click="transactionBTN_Click"/>
+            <Button x:Name="booksBTN" Content="Books" Width="200" Height="35" Margin="0,0,0,20" Click="booksBTN_Click"/>
+            <Button x:Name="logoutBTN" Content="Log Out" Width="200" Height="35" Margin="0,0,0,20" Click="logoutBTN_Click"/>
+        </StackPanel>
+
+
+
+
+
     </Grid>
 </Window>

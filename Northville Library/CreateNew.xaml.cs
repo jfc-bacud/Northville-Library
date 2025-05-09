@@ -26,8 +26,16 @@ namespace Northville_Library
         public CreateNew()
         {
             InitializeComponent();
+            populateCourse();
         }
 
+        private void populateCourse()
+        {
+            var courses = from c in db.Courses
+                          select c.Course_Name;
+
+            courseCB.ItemsSource = courses.ToList();
+        } // Populates courseCB
         private void newuserBT_Click(object sender, RoutedEventArgs e)
         {
             if (!fieldVerify())
@@ -38,16 +46,14 @@ namespace Northville_Library
             {
                 addUser();
             }
-        }
-
+        } // Error Handling
         private bool fieldVerify()
         {
             if (idTB.Text == "" || passwordTB.Text == "" || fnameTB.Text == "" || lnameTB.Text == "" || contactTB.Text == "" || emailTB.Text == "")
                 return false;
 
             return true;
-        }
-
+        } // Checks if any forms are null or empty
         private void addUser()
         {
             string userID = idTB.Text.Trim();
@@ -57,24 +63,28 @@ namespace Northville_Library
             string contact = contactTB.Text.Trim();
             string email = emailTB.Text.Trim();
             string role = roleCB.Text.Trim();
+            string course = courseCB.Text.Trim();
 
             if (roleCB.SelectedIndex == 0)
             {
-                addStudent(userID, password, firstName, lastName, contact, email, role);
+                addStudent(userID, password, firstName, lastName, contact, email, role, course);
             }
             else
             {
                 addStaff(userID, password, firstName, lastName, contact, email, role);
             }
-        }
-
-        private void addStudent(string uID, string pass, string fName, string lName, string contact, string email, string role)
+        } // Checking of user of which table should they be added
+        private void addStudent(string uID, string pass, string fName, string lName, string contact, string email, string role, string course)
         {
             if (!db.Students.Any(u => u.Student_ID == uID))
             {
                 var roleDefinition = (from r in db.Roles
                                      where r.Role_Name == role
                                      select r.Role_ID).FirstOrDefault();
+
+                var courseDefinition = (from c in db.Courses
+                                      where c.Course_Name == course
+                                      select c.Course_ID).FirstOrDefault();
 
                 var _newStudent = new Student
                 {
@@ -84,15 +94,16 @@ namespace Northville_Library
                     Student_Password = pass,
                     Student_ContactNum = contact,
                     Student_Email = email,
-                    Role_ID = roleDefinition
+                    Role_ID = roleDefinition,
+                    Course_ID = courseDefinition
                 };
-
-                db.Students.InsertOnSubmit(_newStudent);
 
                 try
                 {
+                    db.Students.InsertOnSubmit(_newStudent);
                     db.SubmitChanges();
                     MessageBox.Show($"User {uID} has been successfully added!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Students);
                     initializeClosing();
                 }
                 catch (Exception ex)
@@ -104,7 +115,7 @@ namespace Northville_Library
             {
                 MessageBox.Show("User already exists!", "Existing User", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
+        } // Adding to Student Table
         private void addStaff(string uID, string pass, string fName, string lName, string contact, string email, string role)
         {
             if (!db.Staffs.Any(u => u.Staff_ID == uID))
@@ -124,16 +135,16 @@ namespace Northville_Library
                     Role_ID = roleDefinition
                 };
 
-                db.Staffs.InsertOnSubmit(_newStaff);
-
                 try
                 {
+                    db.Staffs.InsertOnSubmit(_newStaff);
                     db.SubmitChanges();
                     MessageBox.Show($"User {uID} has been successfully added!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     initializeClosing();
                 }
                 catch (Exception ex)
                 {
+                    db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Staffs);
                     MessageBox.Show($"Error in adding the user: {ex.Message}", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     initializeClosing();
                 }
@@ -142,15 +153,26 @@ namespace Northville_Library
             {
                 MessageBox.Show("User already exists!", "Existing User", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
+        } // Adding to Staff Table
         private void initializeClosing()
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
-        }
-
-
+        } // For Closing of Window
+        private void roleCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (courseCB == null)
+            {
+                return;
+            }
+            else
+            {
+                if (roleCB.SelectedIndex == 0)
+                    courseCB.IsEnabled = true;
+                else
+                    courseCB.IsEnabled = false;
+            }
+        } // Checks if which index of roleCB is selected. If not Student, disable Course Combobox
     }
 }

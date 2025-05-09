@@ -21,11 +21,12 @@ namespace Northville_Library
     /// </summary>
     public partial class MainWindow : Window
     {
-        DataClasses1DataContext db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
+        DataClasses1DataContext db;
 
         public MainWindow()
         {
             InitializeComponent();
+            refreshDatabase();
         }
 
         private void LoginBT_Click(object sender, RoutedEventArgs e)
@@ -98,8 +99,6 @@ namespace Northville_Library
                 if (PasswordTB.Text == student.Student_Password)
                     return true;
             }
-
-            MessageBox.Show("Fail2!");
             return false;
         }
         private string getUserRole()
@@ -136,9 +135,7 @@ namespace Northville_Library
                     break;
 
                 case "R02": // STUDENT
-                    StudentWindow studentWindow = new StudentWindow();
-                    studentWindow.studentUser = LoginTB.Text.ToString();
-
+                    StudentWindow studentWindow = new StudentWindow(LoginTB.Text.ToString());
                     studentWindow.Show();
                     this.Close();
                     break;
@@ -153,6 +150,10 @@ namespace Northville_Library
             newUser.Show();
             this.Close();
 
+        }
+        private void refreshDatabase()
+        {
+            db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
         }
     }
 }
