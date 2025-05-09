@@ -87,7 +87,6 @@ namespace Northville_Library
             transactionPage = new StudentTransaction(localstudentUID);
             pageFrame.Content = transactionPage;
         }
-
         private void booksBTN_Click(object sender, RoutedEventArgs e)
         {
             booksPage = new StudentBooks(localstudentUID);
