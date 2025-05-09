@@ -37,7 +37,7 @@ namespace Northville_Library
         {
             profilePage = new StudentProfile(localstudentUID);
             pageFrame.Content = profilePage;
-        }
+        } // Displays very first page (Profile Page) on Window Startup
         public void retrieveUserInformation()
         {
             db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
@@ -56,17 +56,17 @@ namespace Northville_Library
             studentidLBL.Content = student.Student_ID;
             roleLBL.Content = role.Role_Name;
 
-        } // Retrieve User Information
+        } // Retrieve User Information for UI displays (labels) at Window
         private void profileBTN_Click(object sender, RoutedEventArgs e)
         {
             displayFirstPage();
-        }
+        } // Navigates to Profile Page
         public void deleteClose()
         {
             MainWindow window = new MainWindow();
             window.Show();
             this.Close();
-        }
+        } // Method that closes the window IF user decides to delete their account
         private void logoutBTN_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to log out?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -81,16 +81,16 @@ namespace Northville_Library
             {
                 return;
             }
-        }
+        } // Logs out user and returns to main
         private void transactionBTN_Click(object sender, RoutedEventArgs e)
         {
             transactionPage = new StudentTransaction(localstudentUID);
             pageFrame.Content = transactionPage;
-        }
+        } // Goes to Transaction Page
         private void booksBTN_Click(object sender, RoutedEventArgs e)
         {
             booksPage = new StudentBooks(localstudentUID);
             pageFrame.Content = booksPage;
-        }
+        } // Goes to Books Page
     }
 }

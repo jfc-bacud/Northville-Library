@@ -20,9 +20,9 @@ namespace Northville_Library.StudentWindow_Pages
     /// </summary>
     public partial class StudentBooks : Page
     {
-        DataClasses1DataContext db;
-        public string localstudentUID;
-        Book selectedBook;
+        DataClasses1DataContext db; // like that as I need to call another new instance to 'refresh' everything
+        public string localstudentUID; // to store which user is currently doing all the shit
+        Book selectedBook; // used later
 
 
         public StudentBooks(string studentUID)
@@ -46,8 +46,7 @@ namespace Northville_Library.StudentWindow_Pages
             {
                 booksresultsLBL.Content = $"{booksDataGrid.Items.Count} Book/s Found";
             }
-        }
-
+        } // Populates the datagrid of books that have a quantity of 1+
         private void booksDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
                 if (booksDataGrid.SelectedItem != null && booksDataGrid.SelectedItem is Book _selectedBook)
@@ -60,8 +59,7 @@ namespace Northville_Library.StudentWindow_Pages
                     selectedBook = null;
                     borrowBTN.IsEnabled = false;
                 }
-        }
-
+        } // Detects if a row has been selected, and if yes, enables button
         private void borrowBTN_Click(object sender, RoutedEventArgs e)
         {
             if (selectedBook != null)
@@ -70,8 +68,7 @@ namespace Northville_Library.StudentWindow_Pages
                 CreateTransaction();
 
             }
-        }
-
+        } // Runs an event in SQL side to decrease quantity of book in table AND creates transaction
         private void CreateTransaction()
         {
             var lastTransaction = db.Transactions.OrderByDescending(t => t.Transaction_ID).FirstOrDefault();
@@ -111,14 +108,13 @@ namespace Northville_Library.StudentWindow_Pages
             }
 
 
-        }
-
+        } // Creates Transaction Here
         private void booksDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyName == "Transactions")
             {
                 e.Cancel = true;
             }
-        }
+        } // An event to hide an unneccessary column
     }
 }

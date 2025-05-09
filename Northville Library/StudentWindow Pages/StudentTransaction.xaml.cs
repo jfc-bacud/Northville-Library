@@ -54,9 +54,8 @@ namespace Northville_Library.StudentWindow_Pages
             {
                 transactionsresultsLBL.Content = $"{transactionDataGrid.Items.Count} Transaction/s Found";
             }
-        }
-
-        private void LoadMyFines()
+        } // Loads All Users' Transactions
+        private void LoadMyFines() // Loads All Users' Fines
         {
             List<object> finesList = new List<object>();
 
@@ -96,15 +95,6 @@ namespace Northville_Library.StudentWindow_Pages
             {
                 finesresultsLBL.Content = $"{finesDataGrid.Items.Count} Fine/s Found";
             }
-        }
-
-        private void HideUnwanted()
-        {
-            var studentColumn = transactionDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "Student");
-            var bookColumn = transactionDataGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "Book");
-
-            studentColumn.Visibility = Visibility.Collapsed;
-            bookColumn.Visibility = Visibility.Collapsed;
         }
     }
 }

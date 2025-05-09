@@ -23,7 +23,7 @@ namespace Northville_Library.StudentWindow_Pages
     {
         DataClasses1DataContext db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
 
-        public string localstudentUID;
+        public string localstudentUID; // Saved locally to compare and retrieve old information 
         private string localFirstName;
         private string localLastName;
         private string localPassword;
@@ -52,7 +52,7 @@ namespace Northville_Library.StudentWindow_Pages
             displayRoleTB.Text = student.Role_ID.ToString();
 
             saveLocalChangeable();
-        }
+        } // Retrieves all info and displays it sa page
         private void saveBT_Click(object sender, RoutedEventArgs e)
         {
             int errorState;
@@ -93,7 +93,7 @@ namespace Northville_Library.StudentWindow_Pages
                 returnLocalChangeable();
                 return;
             }
-        }
+        } // Saves any changes done
         private void saveLocalChangeable()
         {
             localFirstName = editFirstNameTB.Text.ToString();
@@ -101,7 +101,7 @@ namespace Northville_Library.StudentWindow_Pages
             localPassword = editPasswordTB.Text.ToString();
             localEmail = editEmailTB.Text.ToString();
             localContact = editContactTB.Text.ToString();
-        }
+        } // Changes old local saves to current saves IF changes were done to the database
         private void returnLocalChangeable()
         {
             editFirstNameTB.Text = localFirstName;
@@ -109,7 +109,7 @@ namespace Northville_Library.StudentWindow_Pages
             editPasswordTB.Text = localPassword;
             editEmailTB.Text = localEmail;
             editContactTB.Text = localContact;
-        }
+        } // In case of failure, returns fields to their original values through old local saves
         private bool hasChangesNotBlank(out int errorState)
         {
             if (editFirstNameTB.Text != "" && editLastNameTB.Text != "" && editPasswordTB.Text != ""
@@ -132,7 +132,7 @@ namespace Northville_Library.StudentWindow_Pages
                 errorState = 1;
                 return false;
             }
-        }
+        } // Input validation to check if there are changes and no blanks
         private void updateUserInfo()
         {
             if (Window.GetWindow(this) is StudentWindow studentWindow)
@@ -143,7 +143,7 @@ namespace Northville_Library.StudentWindow_Pages
 /*
             var mainWindow = Application.Current.MainWindow as StudentWindow;
             mainWindow.retrieveUserInformation();*/
-        }
+        } // Updates the main window for any changes. Mainly used if the First Name has been changed so that changes reflect IMMEDIATELY
         private void deleteBT_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete your account?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -159,13 +159,13 @@ namespace Northville_Library.StudentWindow_Pages
                 MessageBox.Show($"Deleted User: {localstudentUID}, returning to login page.", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 onDelete();
             }
-        }
+        } // Deletes user from table lmao
         private void onDelete()
         {
             if (Window.GetWindow(this) is StudentWindow studentWindow)
             {
                 studentWindow.deleteClose();
             }
-        }
+        } // Leads to the delete event in StudentWindow that closes the current window
     }
 }
