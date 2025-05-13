@@ -65,7 +65,7 @@ namespace Northville_Library.StudentWindow_Pages
                                    f.Fines_ID,
                                    f.Transaction_ID,
                                    f.Fine_Amount,
-                                   f.Days_OverDue,
+                                   f.Days_Overdue,
                                    f.Fines_Status
                                };
 

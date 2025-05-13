@@ -56,6 +56,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWindow Pages\AdminCourse.xaml.cs">
+      <DependentUpon>AdminCourse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow Pages\AdminFines.xaml.cs">
+      <DependentUpon>AdminFines.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow Pages\AdminProfile.xaml.cs">
+      <DependentUpon>AdminProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow Pages\AdminStaff.xaml.cs">
+      <DependentUpon>AdminStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow Pages\AdminStudent.xaml.cs">
+      <DependentUpon>AdminStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow Pages\AdminTransaction.xaml.cs">
+      <DependentUpon>AdminTransaction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateNew.xaml.cs">
       <DependentUpon>CreateNew.xaml</DependentUpon>
     </Compile>
@@ -71,6 +92,34 @@
     <Compile Include="StudentWindow.xaml.cs">
       <DependentUpon>StudentWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AdminWindow Pages\AdminCourse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow Pages\AdminFines.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow Pages\AdminProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow Pages\AdminStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow Pages\AdminStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow Pages\AdminTransaction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

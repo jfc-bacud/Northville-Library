@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,45 +13,60 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Northville_Library.StudentWindow_Pages
+namespace Northville_Library.AdminWindow_Pages
 {
     /// <summary>
-    /// Interaction logic for StudentProfile.xaml
+    /// Interaction logic for AdminProfile.xaml
     /// </summary>
-    public partial class StudentProfile : Page
+    public partial class AdminProfile : Page
     {
         DataClasses1DataContext db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
 
-        public string localstudentUID; // Saved locally to compare and retrieve old information 
+        public string localadminUID; // Saved locally to compare and retrieve old information 
         private string localFirstName;
         private string localLastName;
         private string localPassword;
         private string localEmail;
         private string localContact;
 
-        public StudentProfile(string studentUID)
+        public AdminProfile(string adminUID)
         {
-            localstudentUID = studentUID;
+            localadminUID = adminUID;
             InitializeComponent();
             retrieveUserInformation();
         }
         public void retrieveUserInformation()
         {
-            var student = (from s in db.Students
-                           where s.Student_ID == localstudentUID
+            var staff = (from s in db.Staffs
+                           where s.Staff_ID == localadminUID
                            select s).FirstOrDefault();
 
-            displayIDTB.Text = student.Student_ID.ToString();
-            editFirstNameTB.Text = student.Student_FirstName.ToString();
-            editLastNameTB.Text = student.Student_LastName.ToString();
-            editPasswordTB.Text = student.Student_Password.ToString();
-            editContactTB.Text = student.Student_ContactNum.ToString();
-            editEmailTB.Text = student.Student_Email.ToString();
-            displayCourseTB.Text = student.Course_ID.ToString();
-            displayRoleTB.Text = student.Role_ID.ToString();
+            displayIDTB.Text = staff.Staff_ID.ToString();
+            editFirstNameTB.Text = staff.Staff_FirstName.ToString();
+            editLastNameTB.Text = staff.Staff_LastName.ToString();
+            editPasswordTB.Text = staff.Staff_Password.ToString();
+            editContactTB.Text = staff.Staff_ContactNum.ToString();
+            editEmailTB.Text = staff.Staff_Email.ToString();
+            displayRoleTB.Text = staff.Role_ID.ToString();
 
             saveLocalChangeable();
-        } // Retrieves all info and displays it sa page
+        } // Retrieve's current user's information
+        private void saveLocalChangeable()
+        {
+            localFirstName = editFirstNameTB.Text.ToString();
+            localLastName = editLastNameTB.Text.ToString();
+            localPassword = editPasswordTB.Text.ToString();
+            localEmail = editEmailTB.Text.ToString();
+            localContact = editContactTB.Text.ToString();
+        } // Changes old local saves to current saves IF changes were done to the database
+        private void returnLocalChangeable()
+        {
+            editFirstNameTB.Text = localFirstName;
+            editLastNameTB.Text = localLastName;
+            editPasswordTB.Text = localPassword;
+            editEmailTB.Text = localEmail;
+            editContactTB.Text = localContact;
+        } // In case of failure, returns fields to their original values through old local saves
         private void saveBT_Click(object sender, RoutedEventArgs e)
         {
             int errorState;
@@ -62,15 +76,15 @@ namespace Northville_Library.StudentWindow_Pages
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var student = (from s in db.Students
-                                   where s.Student_ID == localstudentUID
+                    var staff = (from s in db.Staffs
+                                   where s.Staff_ID == localadminUID
                                    select s).FirstOrDefault();
 
-                    student.Student_FirstName = editFirstNameTB.Text;
-                    student.Student_LastName = editLastNameTB.Text;
-                    student.Student_Password = editPasswordTB.Text;
-                    student.Student_Email = editEmailTB.Text;
-                    student.Student_ContactNum = editContactTB.Text;
+                    staff.Staff_FirstName = editFirstNameTB.Text;
+                    staff.Staff_LastName = editLastNameTB.Text;
+                    staff.Staff_Password = editPasswordTB.Text;
+                    staff.Staff_Email = editEmailTB.Text;
+                    staff.Staff_ContactNum = editContactTB.Text;
 
                     db.SubmitChanges();
                     saveLocalChangeable();
@@ -92,24 +106,8 @@ namespace Northville_Library.StudentWindow_Pages
 
                 returnLocalChangeable();
                 return;
-            }
-        } // Saves any changes done
-        private void saveLocalChangeable()
-        {
-            localFirstName = editFirstNameTB.Text.ToString();
-            localLastName = editLastNameTB.Text.ToString();
-            localPassword = editPasswordTB.Text.ToString();
-            localEmail = editEmailTB.Text.ToString();
-            localContact = editContactTB.Text.ToString();
-        } // Changes old local saves to current saves IF changes were done to the database
-        private void returnLocalChangeable()
-        {
-            editFirstNameTB.Text = localFirstName;
-            editLastNameTB.Text = localLastName;
-            editPasswordTB.Text = localPassword;
-            editEmailTB.Text = localEmail;
-            editContactTB.Text = localContact;
-        } // In case of failure, returns fields to their original values through old local saves
+            } 
+        } // Save any changes done
         private bool hasChangesNotBlank(out int errorState)
         {
             if (editFirstNameTB.Text != "" && editLastNameTB.Text != "" && editPasswordTB.Text != ""
@@ -139,6 +137,7 @@ namespace Northville_Library.StudentWindow_Pages
             {
                 studentWindow.retrieveUserInformation();
             }
+
         } // Updates the main window for any changes. Mainly used if the First Name has been changed so that changes reflect IMMEDIATELY
         private void deleteBT_Click(object sender, RoutedEventArgs e)
         {
@@ -146,16 +145,16 @@ namespace Northville_Library.StudentWindow_Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                var studentToDelete = db.Students.SingleOrDefault(s => s.Student_ID == localstudentUID);
+                var studentToDelete = db.Students.SingleOrDefault(s => s.Student_ID == localadminUID);
 
                 db.Students.DeleteOnSubmit(studentToDelete);
                 db.SubmitChanges();
                 db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
 
-                MessageBox.Show($"Deleted User: {localstudentUID}, returning to login page.", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Deleted User: {localadminUID}, returning to login page.", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 onDelete();
             }
-        } // Deletes user from table lmao
+        } // Delete's user from table
         private void onDelete()
         {
             if (Window.GetWindow(this) is StudentWindow studentWindow)

@@ -23,12 +23,13 @@ namespace Northville_Library
     {
         DataClasses1DataContext db;
 
+        private string localPassword;
+
         public MainWindow()
         {
             InitializeComponent();
             refreshDatabase();
         }
-
         private void LoginBT_Click(object sender, RoutedEventArgs e)
         {
             if (LoginBT_Verify())
@@ -52,7 +53,7 @@ namespace Northville_Library
         }
         private bool LoginBT_Verify()
         {
-            if (LoginTB.Text == "" || PasswordTB.Text == "")
+            if (LoginTB.Text == "" || localPassword == "")
             {
                 MessageBox.Show("Please fill in all fields!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
@@ -90,13 +91,13 @@ namespace Northville_Library
             
             if (staff != null)
             {
-                if (PasswordTB.Text == staff.Staff_Password)
+                if (localPassword == staff.Staff_Password)
                     return true;
             }
 
             if (student != null)
             {
-                if (PasswordTB.Text == student.Student_Password)
+                if (localPassword == student.Student_Password)
                     return true;
             }
             return false;
@@ -131,7 +132,10 @@ namespace Northville_Library
         {
             switch (role)
             {
-                case "R01":
+                case "R01": // ADMIN
+                    AdminWindow adminWindow = new AdminWindow(LoginTB.Text.ToString());
+                    adminWindow.Show();
+                    this.Close();
                     break;
 
                 case "R02": // STUDENT
@@ -154,6 +158,10 @@ namespace Northville_Library
         private void refreshDatabase()
         {
             db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
+        }
+        private void PasswordTB_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            localPassword = PasswordTB.Password.ToString();
         }
     }
 }

@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Northville" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=Northville;Integrated Security=True" SettingsObjectName="Northville_Library.Properties.Settings" SettingsPropertyName="NorthvilleConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.VisitLog" Member="VisitLogs">
+    <Type Name="VisitLog">
+      <Column Name="Visit_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Visit_DateTime" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Student_VisitLog" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Book" Member="Books">
     <Type Name="Book">
       <Column Name="Book_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -24,7 +32,7 @@
       <Column Name="Fines_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Transaction_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Fine_Amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Days_OverDue" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Days_Overdue" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Fines_Status" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Transaction_Fine" Member="Transaction" ThisKey="Transaction_ID" OtherKey="Transaction_ID" Type="Transaction" IsForeignKey="true" />
     </Type>
@@ -34,6 +42,7 @@
       <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Role_Name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
       <Association Name="Role_Staff" Member="Staffs" ThisKey="Role_ID" OtherKey="Role_ID" Type="Staff" />
+      <Association Name="Role_Staff1" Member="Staffs1" ThisKey="Role_ID" OtherKey="Role_ID" Type="Staff" />
       <Association Name="Role_Student" Member="Students" ThisKey="Role_ID" OtherKey="Role_ID" Type="Student" />
     </Type>
   </Table>
@@ -47,6 +56,7 @@
       <Column Name="Staff_ContactNum" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Staff_Email" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Role_Staff" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
+      <Association Name="Role_Staff1" Member="Role1" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Student" Member="Students">
@@ -59,8 +69,8 @@
       <Column Name="Student_Email" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Course_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Student_Transaction" Member="Transactions" ThisKey="Student_ID" OtherKey="Student_ID" Type="Transaction" />
       <Association Name="Student_VisitLog" Member="VisitLogs" ThisKey="Student_ID" OtherKey="Student_ID" Type="VisitLog" />
+      <Association Name="Student_Transaction" Member="Transactions" ThisKey="Student_ID" OtherKey="Student_ID" Type="Transaction" />
       <Association Name="Course_Student" Member="Course" ThisKey="Course_ID" OtherKey="Course_ID" Type="Course" IsForeignKey="true" />
       <Association Name="Role_Student" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
     </Type>
@@ -77,14 +87,6 @@
       <Association Name="Transaction_Fine" Member="Fines" ThisKey="Transaction_ID" OtherKey="Transaction_ID" Type="Fine" />
       <Association Name="Book_Transaction" Member="Book" ThisKey="Book_ID" OtherKey="Book_ID" Type="Book" IsForeignKey="true" />
       <Association Name="Student_Transaction" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.VisitLog" Member="VisitLogs">
-    <Type Name="VisitLog">
-      <Column Name="Visit_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Student_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Visit_DateTime" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Association Name="Student_VisitLog" Member="Student" ThisKey="Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

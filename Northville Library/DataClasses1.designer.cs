@@ -30,6 +30,9 @@ namespace Northville_Library
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertVisitLog(VisitLog instance);
+    partial void UpdateVisitLog(VisitLog instance);
+    partial void DeleteVisitLog(VisitLog instance);
     partial void InsertBook(Book instance);
     partial void UpdateBook(Book instance);
     partial void DeleteBook(Book instance);
@@ -51,9 +54,6 @@ namespace Northville_Library
     partial void InsertTransaction(Transaction instance);
     partial void UpdateTransaction(Transaction instance);
     partial void DeleteTransaction(Transaction instance);
-    partial void InsertVisitLog(VisitLog instance);
-    partial void UpdateVisitLog(VisitLog instance);
-    partial void DeleteVisitLog(VisitLog instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -84,6 +84,14 @@ namespace Northville_Library
 				base(connection, mappingSource)
 		{
 			OnCreated();
+		}
+		
+		public System.Data.Linq.Table<VisitLog> VisitLogs
+		{
+			get
+			{
+				return this.GetTable<VisitLog>();
+			}
 		}
 		
 		public System.Data.Linq.Table<Book> Books
@@ -141,12 +149,155 @@ namespace Northville_Library
 				return this.GetTable<Transaction>();
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.VisitLog")]
+	public partial class VisitLog : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		public System.Data.Linq.Table<VisitLog> VisitLogs
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Visit_ID;
+		
+		private string _Student_ID;
+		
+		private System.DateTime _Visit_DateTime;
+		
+		private EntityRef<Student> _Student;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnVisit_IDChanging(string value);
+    partial void OnVisit_IDChanged();
+    partial void OnStudent_IDChanging(string value);
+    partial void OnStudent_IDChanged();
+    partial void OnVisit_DateTimeChanging(System.DateTime value);
+    partial void OnVisit_DateTimeChanged();
+    #endregion
+		
+		public VisitLog()
+		{
+			this._Student = default(EntityRef<Student>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_ID", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Visit_ID
 		{
 			get
 			{
-				return this.GetTable<VisitLog>();
+				return this._Visit_ID;
+			}
+			set
+			{
+				if ((this._Visit_ID != value))
+				{
+					this.OnVisit_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Visit_ID = value;
+					this.SendPropertyChanged("Visit_ID");
+					this.OnVisit_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student_ID", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string Student_ID
+		{
+			get
+			{
+				return this._Student_ID;
+			}
+			set
+			{
+				if ((this._Student_ID != value))
+				{
+					if (this._Student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStudent_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Student_ID = value;
+					this.SendPropertyChanged("Student_ID");
+					this.OnStudent_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_DateTime", DbType="Date NOT NULL")]
+		public System.DateTime Visit_DateTime
+		{
+			get
+			{
+				return this._Visit_DateTime;
+			}
+			set
+			{
+				if ((this._Visit_DateTime != value))
+				{
+					this.OnVisit_DateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._Visit_DateTime = value;
+					this.SendPropertyChanged("Visit_DateTime");
+					this.OnVisit_DateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_VisitLog", Storage="_Student", ThisKey="Student_ID", OtherKey="Student_ID", IsForeignKey=true)]
+		public Student Student
+		{
+			get
+			{
+				return this._Student.Entity;
+			}
+			set
+			{
+				Student previousValue = this._Student.Entity;
+				if (((previousValue != value) 
+							|| (this._Student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student.Entity = null;
+						previousValue.VisitLogs.Remove(this);
+					}
+					this._Student.Entity = value;
+					if ((value != null))
+					{
+						value.VisitLogs.Add(this);
+						this._Student_ID = value.Student_ID;
+					}
+					else
+					{
+						this._Student_ID = default(string);
+					}
+					this.SendPropertyChanged("Student");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -511,7 +662,7 @@ namespace Northville_Library
 		
 		private int _Fine_Amount;
 		
-		private System.DateTime _Days_OverDue;
+		private System.Nullable<int> _Days_Overdue;
 		
 		private string _Fines_Status;
 		
@@ -527,8 +678,8 @@ namespace Northville_Library
     partial void OnTransaction_IDChanged();
     partial void OnFine_AmountChanging(int value);
     partial void OnFine_AmountChanged();
-    partial void OnDays_OverDueChanging(System.DateTime value);
-    partial void OnDays_OverDueChanged();
+    partial void OnDays_OverdueChanging(System.Nullable<int> value);
+    partial void OnDays_OverdueChanged();
     partial void OnFines_StatusChanging(string value);
     partial void OnFines_StatusChanged();
     #endregion
@@ -603,22 +754,22 @@ namespace Northville_Library
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Days_OverDue", DbType="Date NOT NULL")]
-		public System.DateTime Days_OverDue
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Days_Overdue", DbType="Int")]
+		public System.Nullable<int> Days_Overdue
 		{
 			get
 			{
-				return this._Days_OverDue;
+				return this._Days_Overdue;
 			}
 			set
 			{
-				if ((this._Days_OverDue != value))
+				if ((this._Days_Overdue != value))
 				{
-					this.OnDays_OverDueChanging(value);
+					this.OnDays_OverdueChanging(value);
 					this.SendPropertyChanging();
-					this._Days_OverDue = value;
-					this.SendPropertyChanged("Days_OverDue");
-					this.OnDays_OverDueChanged();
+					this._Days_Overdue = value;
+					this.SendPropertyChanged("Days_Overdue");
+					this.OnDays_OverdueChanged();
 				}
 			}
 		}
@@ -710,6 +861,8 @@ namespace Northville_Library
 		
 		private EntitySet<Staff> _Staffs;
 		
+		private EntitySet<Staff> _Staffs1;
+		
 		private EntitySet<Student> _Students;
 		
     #region Extensibility Method Definitions
@@ -725,6 +878,7 @@ namespace Northville_Library
 		public Role()
 		{
 			this._Staffs = new EntitySet<Staff>(new Action<Staff>(this.attach_Staffs), new Action<Staff>(this.detach_Staffs));
+			this._Staffs1 = new EntitySet<Staff>(new Action<Staff>(this.attach_Staffs1), new Action<Staff>(this.detach_Staffs1));
 			this._Students = new EntitySet<Student>(new Action<Student>(this.attach_Students), new Action<Student>(this.detach_Students));
 			OnCreated();
 		}
@@ -782,6 +936,19 @@ namespace Northville_Library
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Staff1", Storage="_Staffs1", ThisKey="Role_ID", OtherKey="Role_ID")]
+		public EntitySet<Staff> Staffs1
+		{
+			get
+			{
+				return this._Staffs1;
+			}
+			set
+			{
+				this._Staffs1.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Student", Storage="_Students", ThisKey="Role_ID", OtherKey="Role_ID")]
 		public EntitySet<Student> Students
 		{
@@ -827,6 +994,18 @@ namespace Northville_Library
 			entity.Role = null;
 		}
 		
+		private void attach_Staffs1(Staff entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role1 = this;
+		}
+		
+		private void detach_Staffs1(Staff entity)
+		{
+			this.SendPropertyChanging();
+			entity.Role1 = null;
+		}
+		
 		private void attach_Students(Student entity)
 		{
 			this.SendPropertyChanging();
@@ -862,6 +1041,8 @@ namespace Northville_Library
 		
 		private EntityRef<Role> _Role;
 		
+		private EntityRef<Role> _Role1;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -885,6 +1066,7 @@ namespace Northville_Library
 		public Staff()
 		{
 			this._Role = default(EntityRef<Role>);
+			this._Role1 = default(EntityRef<Role>);
 			OnCreated();
 		}
 		
@@ -919,7 +1101,7 @@ namespace Northville_Library
 			{
 				if ((this._Role_ID != value))
 				{
-					if (this._Role.HasLoadedOrAssignedValue)
+					if ((this._Role.HasLoadedOrAssignedValue || this._Role1.HasLoadedOrAssignedValue))
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1066,6 +1248,40 @@ namespace Northville_Library
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Staff1", Storage="_Role1", ThisKey="Role_ID", OtherKey="Role_ID", IsForeignKey=true)]
+		public Role Role1
+		{
+			get
+			{
+				return this._Role1.Entity;
+			}
+			set
+			{
+				Role previousValue = this._Role1.Entity;
+				if (((previousValue != value) 
+							|| (this._Role1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Role1.Entity = null;
+						previousValue.Staffs1.Remove(this);
+					}
+					this._Role1.Entity = value;
+					if ((value != null))
+					{
+						value.Staffs1.Add(this);
+						this._Role_ID = value.Role_ID;
+					}
+					else
+					{
+						this._Role_ID = default(string);
+					}
+					this.SendPropertyChanged("Role1");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1109,9 +1325,9 @@ namespace Northville_Library
 		
 		private string _Role_ID;
 		
-		private EntitySet<Transaction> _Transactions;
-		
 		private EntitySet<VisitLog> _VisitLogs;
+		
+		private EntitySet<Transaction> _Transactions;
 		
 		private EntityRef<Course> _Course;
 		
@@ -1141,8 +1357,8 @@ namespace Northville_Library
 		
 		public Student()
 		{
-			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
 			this._VisitLogs = new EntitySet<VisitLog>(new Action<VisitLog>(this.attach_VisitLogs), new Action<VisitLog>(this.detach_VisitLogs));
+			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
 			this._Course = default(EntityRef<Course>);
 			this._Role = default(EntityRef<Role>);
 			OnCreated();
@@ -1316,19 +1532,6 @@ namespace Northville_Library
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Transaction", Storage="_Transactions", ThisKey="Student_ID", OtherKey="Student_ID")]
-		public EntitySet<Transaction> Transactions
-		{
-			get
-			{
-				return this._Transactions;
-			}
-			set
-			{
-				this._Transactions.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_VisitLog", Storage="_VisitLogs", ThisKey="Student_ID", OtherKey="Student_ID")]
 		public EntitySet<VisitLog> VisitLogs
 		{
@@ -1339,6 +1542,19 @@ namespace Northville_Library
 			set
 			{
 				this._VisitLogs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Transaction", Storage="_Transactions", ThisKey="Student_ID", OtherKey="Student_ID")]
+		public EntitySet<Transaction> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
 			}
 		}
 		
@@ -1430,18 +1646,6 @@ namespace Northville_Library
 			}
 		}
 		
-		private void attach_Transactions(Transaction entity)
-		{
-			this.SendPropertyChanging();
-			entity.Student = this;
-		}
-		
-		private void detach_Transactions(Transaction entity)
-		{
-			this.SendPropertyChanging();
-			entity.Student = null;
-		}
-		
 		private void attach_VisitLogs(VisitLog entity)
 		{
 			this.SendPropertyChanging();
@@ -1449,6 +1653,18 @@ namespace Northville_Library
 		}
 		
 		private void detach_VisitLogs(VisitLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = null;
+		}
+		
+		private void attach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = this;
+		}
+		
+		private void detach_Transactions(Transaction entity)
 		{
 			this.SendPropertyChanging();
 			entity.Student = null;
@@ -1768,157 +1984,6 @@ namespace Northville_Library
 		{
 			this.SendPropertyChanging();
 			entity.Transaction = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.VisitLog")]
-	public partial class VisitLog : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Visit_ID;
-		
-		private string _Student_ID;
-		
-		private System.DateTime _Visit_DateTime;
-		
-		private EntityRef<Student> _Student;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnVisit_IDChanging(string value);
-    partial void OnVisit_IDChanged();
-    partial void OnStudent_IDChanging(string value);
-    partial void OnStudent_IDChanged();
-    partial void OnVisit_DateTimeChanging(System.DateTime value);
-    partial void OnVisit_DateTimeChanged();
-    #endregion
-		
-		public VisitLog()
-		{
-			this._Student = default(EntityRef<Student>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_ID", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Visit_ID
-		{
-			get
-			{
-				return this._Visit_ID;
-			}
-			set
-			{
-				if ((this._Visit_ID != value))
-				{
-					this.OnVisit_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Visit_ID = value;
-					this.SendPropertyChanged("Visit_ID");
-					this.OnVisit_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student_ID", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string Student_ID
-		{
-			get
-			{
-				return this._Student_ID;
-			}
-			set
-			{
-				if ((this._Student_ID != value))
-				{
-					if (this._Student.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnStudent_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Student_ID = value;
-					this.SendPropertyChanged("Student_ID");
-					this.OnStudent_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_DateTime", DbType="Date NOT NULL")]
-		public System.DateTime Visit_DateTime
-		{
-			get
-			{
-				return this._Visit_DateTime;
-			}
-			set
-			{
-				if ((this._Visit_DateTime != value))
-				{
-					this.OnVisit_DateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._Visit_DateTime = value;
-					this.SendPropertyChanged("Visit_DateTime");
-					this.OnVisit_DateTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_VisitLog", Storage="_Student", ThisKey="Student_ID", OtherKey="Student_ID", IsForeignKey=true)]
-		public Student Student
-		{
-			get
-			{
-				return this._Student.Entity;
-			}
-			set
-			{
-				Student previousValue = this._Student.Entity;
-				if (((previousValue != value) 
-							|| (this._Student.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Student.Entity = null;
-						previousValue.VisitLogs.Remove(this);
-					}
-					this._Student.Entity = value;
-					if ((value != null))
-					{
-						value.VisitLogs.Add(this);
-						this._Student_ID = value.Student_ID;
-					}
-					else
-					{
-						this._Student_ID = default(string);
-					}
-					this.SendPropertyChanged("Student");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }
