@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Northville_Library"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <StackPanel Margin="353,0,353,0">
             <Image Source="/Assets/Northville Logo.png" Height="374" Width="500" />

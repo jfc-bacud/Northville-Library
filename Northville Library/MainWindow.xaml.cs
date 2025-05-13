@@ -24,7 +24,6 @@ namespace Northville_Library
         DataClasses1DataContext db;
 
         private string localPassword;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -139,6 +138,7 @@ namespace Northville_Library
                     break;
 
                 case "R02": // STUDENT
+                    RecordLogin(LoginTB.Text.ToString());
                     StudentWindow studentWindow = new StudentWindow(LoginTB.Text.ToString());
                     studentWindow.Show();
                     this.Close();
@@ -150,6 +150,40 @@ namespace Northville_Library
                     this.Close();
                     break;
             }
+        }
+        private void RecordLogin(string currentUser)
+        {
+            var lastVisit = db.VisitLogs.OrderByDescending(v => v.Visit_ID).FirstOrDefault();
+            string newVisitID;
+
+            if (lastVisit == null)
+            {
+                newVisitID = "V01";
+            }
+            else
+            {
+                int lastNum = int.Parse(lastVisit.Visit_ID.Substring(1));
+                int newNum = lastNum + 1;
+                newVisitID = "V" + newNum.ToString("D2");
+            }
+
+            var _newVisit = new VisitLog
+            {
+                Visit_ID = newVisitID,
+                Visit_DateTime = DateTime.Now,
+                Student_ID = currentUser,
+            };
+
+            try
+            {
+                db.VisitLogs.InsertOnSubmit(_newVisit);
+                db.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error! Current session was not recorded!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
         }
         private void CreateBT_Click(object sender, RoutedEventArgs e)
         {

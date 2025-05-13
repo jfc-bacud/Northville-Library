@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Northville_Library"
         mc:Ignorable="d"
-        Title="StudentWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen">
+        Title="StudentWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="413"/>
