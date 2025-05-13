@@ -64,7 +64,7 @@ namespace Northville_Library.AdminWindow_Pages
             {
                 e.Cancel = true;
             }
-        } // Auto
+        } 
         private void saveLocalChangeables()
         {
             selectedCourseID = selectedCourse.Course_ID;
@@ -155,13 +155,13 @@ namespace Northville_Library.AdminWindow_Pages
                 {
                     db.Courses.InsertOnSubmit(_newCourse);
                     db.SubmitChanges();
-                    MessageBox.Show($"Staff {courseID} has been successfully added!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Course {courseID} has been successfully added!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     LoadCourses();
                 }
                 catch (Exception ex)
                 {
                     db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Students);
-                    MessageBox.Show($"Error in adding the user: {ex.Message}", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Error in adding new course!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     LoadCourses();
                 }
             }
@@ -202,7 +202,7 @@ namespace Northville_Library.AdminWindow_Pages
             {
                 db.Courses.DeleteOnSubmit(selectedCourse);
                 db.SubmitChanges();
-                MessageBox.Show($"Deleted User: {selectedCourseID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Deleted Course: {selectedCourseID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 LoadCourses();
                 courseDataGrid.UnselectAll();

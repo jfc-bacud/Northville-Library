@@ -145,6 +145,9 @@ namespace Northville_Library
                     break;
 
                 case "R03":
+                    LibrarianWindow librarianWindow = new LibrarianWindow(LoginTB.Text.ToString());
+                    librarianWindow.Show();
+                    this.Close();
                     break;
             }
         }

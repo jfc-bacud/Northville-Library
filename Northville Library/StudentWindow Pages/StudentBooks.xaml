@@ -13,7 +13,8 @@
             <Label Content="Books" FontSize="40" Foreground="White" Margin="25,30,25,5" FontWeight="Bold"/>
             <GroupBox Header="All Available Books" Margin="20,10,30,11" FontSize="20" Foreground="White">
                 <StackPanel>
-                    <DataGrid x:Name="booksDataGrid" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Height="400" FontSize="14.3" Margin="5" SelectionChanged="booksDataGrid_SelectionChanged" AutoGeneratingColumn="booksDataGrid_AutoGeneratingColumn"/>
+                    <DataGrid x:Name="booksDataGrid" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Height="400" 
+                              FontSize="15" ColumnWidth="*" Margin="5" SelectionChanged="booksDataGrid_SelectionChanged" AutoGeneratingColumn="booksDataGrid_AutoGeneratingColumn"/>
                     <Label x:Name="booksresultsLBL" Content="" Foreground="White" Margin="25,0,35,1" FontWeight="Bold" FontSize="15"/>
                 </StackPanel>
             </GroupBox>

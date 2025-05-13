@@ -13,7 +13,7 @@
             <GroupBox Header="Staff List" Margin="20,5,30,11" FontSize="20" Foreground="White" Height="258">
                 <StackPanel>
                     <DataGrid x:Name="staffDataGrid" AutoGenerateColumns="True" IsReadOnly="True" 
-                              SelectionMode="Single" Height="213" FontSize="15" Margin="5" 
+                              SelectionMode="Single" Height="213" FontSize="15" ColumnWidth="*" Margin="5" 
                               AutoGeneratingColumn="staffDataGrid_AutoGeneratingColumn" 
                               SelectionChanged="staffDataGrid_SelectionChanged"/>
                 </StackPanel>

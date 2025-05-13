@@ -229,8 +229,8 @@ namespace Northville_Library.AdminWindow_Pages
         private void EditStaff()
         {
             var roleDefinition = (from r in db.Roles
-                                   where r.Role_Name == roleCB.Text
-                                   select r.Role_ID).FirstOrDefault();
+                                    where r.Role_Name == roleCB.Text
+                                    select r.Role_ID).FirstOrDefault();
 
             if (selectedStaff != null)
             {
@@ -245,12 +245,12 @@ namespace Northville_Library.AdminWindow_Pages
             try
             {
                 db.SubmitChanges();
-                MessageBox.Show($"Staff {selectedadminID} has been changed!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Student {selectedadminID} has been changed!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadStaff();
             }
             catch (Exception ex)
             {
-                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Staffs);
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Students);
                 MessageBox.Show($"Error in adding the user: {ex.Message}", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 LoadStaff();
             }

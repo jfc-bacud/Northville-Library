@@ -1,0 +1,50 @@
+﻿<Page x:Class="Northville_Library.LibrarianWindow_Pages.LibrarianProfile"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Northville_Library.LibrarianWindow_Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="815"
+      Title="LibrarianProfile">
+
+    <Grid Background="#800000">
+        <StackPanel>
+            <Label Content="Profile" FontSize="40" Foreground="White" Margin="25,30,25,5" FontWeight="Bold"/>
+            <GroupBox Header="Personal Information" Margin="20,10,30,11" FontSize="20" Foreground="White">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20" Width="728">
+                        <Label Content="First Name:" Margin="5" Foreground="White"/>
+                        <TextBox x:Name="editFirstNameTB" Width="235" Margin="5"/>
+                        <Label Content="Last Name:" Margin="5" Foreground="White"/>
+                        <TextBox x:Name="editLastNameTB" Width="226" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                        <Label Content="Contact No:" Margin="25,0,0,0" Foreground="White"/>
+                        <TextBox x:Name="editContactTB" Width="233" Height="35" Margin="5"/>
+                        <Label Content="Email:" Margin="57,0,0,0" Foreground="White"/>
+                        <TextBox x:Name="editEmailTB" Width="226" Margin="5" Height="35"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Student Information" Margin="20,10,30,11" FontSize="20" Foreground="White">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,20,20,15" Width="729">
+                        <Label Content="Password:" Margin="23,0,0,0" Foreground="White"/>
+                        <TextBox x:Name="editPasswordTB" Width="232" Height="35" Margin="5"/>
+                        <Label Content="User ID:" Margin="42,0,0,0" Foreground="White"/>
+                        <TextBox x:Name="displayIDTB" Width="225" Height="35" Margin="5" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,0,20,15" Width="728">
+                        <Label Content="Role:" Margin="68,0,0,0" Foreground="White"/>
+                        <TextBox x:Name="displayRoleTB" Width="231" Height="35" Margin="5" IsEnabled="False"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,60">
+                <Button x:Name="saveBT" Content="Save Changes" Width="150" Height="50" Margin="0,0,30,0" FontSize="15" Click="saveBT_Click"/>
+                <Button x:Name="deleteBT" Content="Delete Account" Width="150" Height="50" FontSize="15" Click="deleteBT_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

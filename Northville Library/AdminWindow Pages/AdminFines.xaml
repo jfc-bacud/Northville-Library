@@ -5,10 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Northville_Library.AdminWindow_Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminFines">
-
-    <Grid>
-        
+d:DesignHeight="700" d:DesignWidth="815"
+Title="AdminFines">
+    <Grid Background="#800000">
+        <StackPanel>
+            <StackPanel HorizontalAlignment="Left">
+                <Label Content="Fines" FontSize="40" Foreground="White" Margin="25,5,25,0" FontWeight="Bold"/>
+                <Button x:Name="transactionBTN" Width="100" Height="25" Content="View Transactions" Margin="0,0,0,0" Click="finesBTN_Click"/>
+            </StackPanel>
+            <GroupBox Header="Fines List" Margin="20,5,30,11" FontSize="20" Foreground="White" Height="491">
+                <StackPanel>
+                    <DataGrid x:Name="finesDataGrid" AutoGenerateColumns="True" IsReadOnly="True" 
+                        SelectionMode="Single" Height="449" FontSize="15" ColumnWidth="*" Margin="5" 
+                        AutoGeneratingColumn="finesDataGrid_AutoGeneratingColumn" 
+                        SelectionChanged="finesDataGrid_SelectionChanged"/>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="paidBTN" Content="Mark as Paid" Width="150" Height="40" FontSize="13" Click="paidBTN_Click" Margin="0,0,5,0" IsEnabled="False"/>
+                <Button x:Name="deselectBTN" Content="Deselect" Width="150" FontSize="13" Click="deselectBTN_Click" IsEnabled="False"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

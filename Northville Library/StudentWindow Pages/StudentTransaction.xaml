@@ -13,13 +13,15 @@
             <Label Content="Transactions &amp; Fines" FontSize="40" Foreground="White" Margin="25,30,25,5" FontWeight="Bold"/>
             <GroupBox Header="All Transactions" Margin="20,10,30,11" FontSize="20" Foreground="White">
                 <StackPanel>
-                    <DataGrid x:Name="transactionDataGrid" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Height="150" FontSize="15" Margin="5"/>
+                    <DataGrid x:Name="transactionDataGrid" AutoGenerateColumns="True" IsReadOnly="True"
+                              SelectionMode="Single" Height="150" FontSize="15" ColumnWidth="*" Margin="5"/>
                     <Label x:Name="transactionsresultsLBL" Content="" Foreground="White" Margin="25,0,35,1" FontWeight="Bold" FontSize="15"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="All Fines" Margin="20,10,30,11" FontSize="20" Foreground="White">
                 <StackPanel>
-                    <DataGrid x:Name="finesDataGrid" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Height="150" FontSize="23.5" Margin="5"/>
+                    <DataGrid x:Name="finesDataGrid" AutoGenerateColumns="True" IsReadOnly="True" 
+                              SelectionMode="Single" Height="150" FontSize="15" ColumnWidth="*" Margin="5"/>
                     <Label x:Name="finesresultsLBL" Content="" Foreground="White" Margin="25,0,35,1" FontWeight="Bold" FontSize="15"/>
                 </StackPanel>
             </GroupBox>

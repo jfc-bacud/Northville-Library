@@ -244,7 +244,7 @@ namespace Northville_Library.AdminWindow_Pages
             try
             {
                 db.SubmitChanges();
-                MessageBox.Show($"Staff {selectedstudentID} has been changed!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Student {selectedstudentID} has been changed!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 LoadStudent();
             }
             catch (Exception ex)

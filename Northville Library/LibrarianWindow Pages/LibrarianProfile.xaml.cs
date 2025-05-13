@@ -13,33 +13,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Northville_Library.AdminWindow_Pages
+namespace Northville_Library.LibrarianWindow_Pages
 {
     /// <summary>
-    /// Interaction logic for AdminProfile.xaml
+    /// Interaction logic for LibrarianProfile.xaml
     /// </summary>
-    public partial class AdminProfile : Page
+    public partial class LibrarianProfile : Page
     {
         DataClasses1DataContext db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
 
-        public string localadminUID; // Saved locally to compare and retrieve old information 
+        private string localLibrarianUID;
         private string localFirstName;
         private string localLastName;
         private string localPassword;
         private string localEmail;
         private string localContact;
-
-        public AdminProfile(string adminUID)
+        public LibrarianProfile(string librarianUID)
         {
-            localadminUID = adminUID;
+            localLibrarianUID = librarianUID;
             InitializeComponent();
             retrieveUserInformation();
         }
         public void retrieveUserInformation()
         {
             var staff = (from s in db.Staffs
-                           where s.Staff_ID == localadminUID
-                           select s).FirstOrDefault();
+                         where s.Staff_ID == localLibrarianUID
+                         select s).FirstOrDefault();
 
             displayIDTB.Text = staff.Staff_ID.ToString();
             editFirstNameTB.Text = staff.Staff_FirstName.ToString();
@@ -77,8 +76,8 @@ namespace Northville_Library.AdminWindow_Pages
                 if (result == MessageBoxResult.Yes)
                 {
                     var staff = (from s in db.Staffs
-                                   where s.Staff_ID == localadminUID
-                                   select s).FirstOrDefault();
+                                 where s.Staff_ID == localLibrarianUID
+                                 select s).FirstOrDefault();
 
                     staff.Staff_FirstName = editFirstNameTB.Text;
                     staff.Staff_LastName = editLastNameTB.Text;
@@ -106,7 +105,7 @@ namespace Northville_Library.AdminWindow_Pages
 
                 returnLocalChangeable();
                 return;
-            } 
+            }
         } // Save any changes done
         private bool hasChangesNotBlank(out int errorState)
         {
@@ -145,21 +144,21 @@ namespace Northville_Library.AdminWindow_Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                var studentToDelete = db.Students.SingleOrDefault(s => s.Student_ID == localadminUID);
+                var studentToDelete = db.Students.SingleOrDefault(s => s.Student_ID == localLibrarianUID);
 
                 db.Students.DeleteOnSubmit(studentToDelete);
                 db.SubmitChanges();
                 db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
 
-                MessageBox.Show($"Deleted User: {localadminUID}, returning to login page.", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Deleted User: {localLibrarianUID}, returning to login page.", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 onDelete();
             }
         } // Delete's user from table
         private void onDelete()
         {
-            if (Window.GetWindow(this) is AdminWindow adminWindow)
+            if (Window.GetWindow(this) is LibrarianWindow librarianWindow)
             {
-                adminWindow.deleteClose();
+                librarianWindow.deleteClose();
             }
         } // Leads to the delete event in StudentWindow that closes the current window
     }

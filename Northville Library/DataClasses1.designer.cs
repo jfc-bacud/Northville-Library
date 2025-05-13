@@ -861,8 +861,6 @@ namespace Northville_Library
 		
 		private EntitySet<Staff> _Staffs;
 		
-		private EntitySet<Staff> _Staffs1;
-		
 		private EntitySet<Student> _Students;
 		
     #region Extensibility Method Definitions
@@ -878,7 +876,6 @@ namespace Northville_Library
 		public Role()
 		{
 			this._Staffs = new EntitySet<Staff>(new Action<Staff>(this.attach_Staffs), new Action<Staff>(this.detach_Staffs));
-			this._Staffs1 = new EntitySet<Staff>(new Action<Staff>(this.attach_Staffs1), new Action<Staff>(this.detach_Staffs1));
 			this._Students = new EntitySet<Student>(new Action<Student>(this.attach_Students), new Action<Student>(this.detach_Students));
 			OnCreated();
 		}
@@ -936,19 +933,6 @@ namespace Northville_Library
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Staff1", Storage="_Staffs1", ThisKey="Role_ID", OtherKey="Role_ID")]
-		public EntitySet<Staff> Staffs1
-		{
-			get
-			{
-				return this._Staffs1;
-			}
-			set
-			{
-				this._Staffs1.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Student", Storage="_Students", ThisKey="Role_ID", OtherKey="Role_ID")]
 		public EntitySet<Student> Students
 		{
@@ -994,18 +978,6 @@ namespace Northville_Library
 			entity.Role = null;
 		}
 		
-		private void attach_Staffs1(Staff entity)
-		{
-			this.SendPropertyChanging();
-			entity.Role1 = this;
-		}
-		
-		private void detach_Staffs1(Staff entity)
-		{
-			this.SendPropertyChanging();
-			entity.Role1 = null;
-		}
-		
 		private void attach_Students(Student entity)
 		{
 			this.SendPropertyChanging();
@@ -1041,8 +1013,6 @@ namespace Northville_Library
 		
 		private EntityRef<Role> _Role;
 		
-		private EntityRef<Role> _Role1;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1066,7 +1036,6 @@ namespace Northville_Library
 		public Staff()
 		{
 			this._Role = default(EntityRef<Role>);
-			this._Role1 = default(EntityRef<Role>);
 			OnCreated();
 		}
 		
@@ -1101,7 +1070,7 @@ namespace Northville_Library
 			{
 				if ((this._Role_ID != value))
 				{
-					if ((this._Role.HasLoadedOrAssignedValue || this._Role1.HasLoadedOrAssignedValue))
+					if (this._Role.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1244,40 +1213,6 @@ namespace Northville_Library
 						this._Role_ID = default(string);
 					}
 					this.SendPropertyChanged("Role");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Role_Staff1", Storage="_Role1", ThisKey="Role_ID", OtherKey="Role_ID", IsForeignKey=true)]
-		public Role Role1
-		{
-			get
-			{
-				return this._Role1.Entity;
-			}
-			set
-			{
-				Role previousValue = this._Role1.Entity;
-				if (((previousValue != value) 
-							|| (this._Role1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Role1.Entity = null;
-						previousValue.Staffs1.Remove(this);
-					}
-					this._Role1.Entity = value;
-					if ((value != null))
-					{
-						value.Staffs1.Add(this);
-						this._Role_ID = value.Role_ID;
-					}
-					else
-					{
-						this._Role_ID = default(string);
-					}
-					this.SendPropertyChanged("Role1");
 				}
 			}
 		}

@@ -1,11 +1,11 @@
-﻿<Window x:Class="Northville_Library.AdminWindow"
+﻿<Window x:Class="Northville_Library.LibrarianWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Northville_Library"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="LibrarianWindow" Height="700" Width="1240" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="413"/>
@@ -26,10 +26,7 @@
                 <Label x:Name="roleLBL" Content="" FontSize="15"/>
             </StackPanel>
             <Button x:Name="profileBTN" Content="Profile" Width="200" Height="35" Margin="0,0,0,10" Click="profileBTN_Click"/>
-            <Button x:Name="staffBTN" Content="Staff List" Width="200" Height="35" Margin="0,0,0,10" Click="stafflistBTN_Click"/>
-            <Button x:Name="studentBTN" Content="Student List" Width="200" Height="35" Margin="0,0,0,10" Click="studentlistBTN_Click"/>
-            <Button x:Name="courseBTN" Content="Course List" Width="200" Height="35" Margin="0,0,0,10" Click="courseBTN_Click"/>
-            <Button x:Name="transactionBTN" Content="Transactions &amp; Fines" Width="200" Height="35" Margin="0,0,0,10" Click="transactionBTN_Click"/>
+            <Button x:Name="booksBTN" Content="Book List" Width="200" Height="35" Margin="0,0,0,10" Click="booksBTN_Click"/>
             <Button x:Name="logoutBTN" Content="Log Out" Width="200" Height="35" Margin="0,0,0,10" Click="logoutBTN_Click"/>
         </StackPanel>
     </Grid>

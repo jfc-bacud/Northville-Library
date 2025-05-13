@@ -113,5 +113,10 @@ namespace Northville_Library
             finesPage = new AdminFines();
             pageFrame.Content = finesPage;
         }
+        public void transactionNavToPage()
+        {
+            transactionPage = new AdminTransaction();
+            pageFrame.Content = transactionPage;
+        }
     }
 }

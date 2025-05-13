@@ -10,13 +10,13 @@
     <Grid Background="#800000">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Transactions &amp; Fines" FontSize="40" Foreground="White" Margin="25,5,25,0" FontWeight="Bold"/>
-                <Button x:Name="finesBTN" Width="100" Height="25" Content="View Fines"  Margin="245,35,25,0" Click="finesBTN_Click"/>
+                <Label Content="Transactions" FontSize="40" Foreground="White" Margin="25,5,25,0" FontWeight="Bold"/>
+                <Button x:Name="finesBTN" Width="100" Height="25" Content="View Fines"  Margin="390,60,25,0" Click="finesBTN_Click"/>
             </StackPanel>
-            <GroupBox Header="Transactions List" Margin="20,5,30,11" FontSize="20" Foreground="White" Height="513">
+            <GroupBox Header="Transactions List" Margin="20,5,30,11" FontSize="20" Foreground="White" Height="489">
                 <StackPanel>
                     <DataGrid x:Name="transactionDataGrid" AutoGenerateColumns="True" IsReadOnly="True" 
-                          SelectionMode="Single" Height="469" FontSize="14" Margin="5" 
+                          SelectionMode="Single" Height="449" FontSize="15" ColumnWidth="*" Margin="5" 
                           AutoGeneratingColumn="transactionDataGrid_AutoGeneratingColumn" 
                           SelectionChanged="transactionDataGrid_SelectionChanged"/>
                 </StackPanel>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,6 @@ namespace Northville_Library.AdminWindow_Pages
             InitializeComponent();
             LoadTransactions();
         }
-
         public void LoadTransactions()
         {
             db = new DataClasses1DataContext(Properties.Settings.Default.NorthvilleConnectionString);
@@ -42,7 +42,6 @@ namespace Northville_Library.AdminWindow_Pages
                 e.Cancel = true;
             }
         } // Auto
-
         private void transactionDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (transactionDataGrid.SelectedItem != null && transactionDataGrid.SelectedItem 
@@ -70,12 +69,18 @@ namespace Northville_Library.AdminWindow_Pages
         }
         private void returnTN_Click(object sender, RoutedEventArgs e)
         {
-            db.ExecuteCommand($"EXEC usp_ReturnBook @TransactionID = {selectedTransaction.Transaction_ID}");
-            localTransactionID = selectedTransaction.Transaction_ID;
-            selectedTransaction = null;
-            CheckIfForFines();
-            localTransactionID = null;
-            LoadTransactions();
+            MessageBoxResult result = MessageBox.Show("Are you sure that you want to mark it as returned?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                db.ExecuteCommand($"EXEC usp_ReturnBook @TransactionID = {selectedTransaction.Transaction_ID}");
+                localTransactionID = selectedTransaction.Transaction_ID;
+                selectedTransaction = null;
+                CheckIfForFines();
+                ReturnBook();
+                localTransactionID = null;
+                LoadTransactions();
+            }
         }
         private void deselectBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -131,6 +136,31 @@ namespace Northville_Library.AdminWindow_Pages
             catch (Exception ex)
             {
                 MessageBox.Show("An error has occured!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void ReturnBook()
+        {
+            var finalizedTransaction = (from t in db.Transactions
+                                        where t.Transaction_ID == localTransactionID
+                                        select t).FirstOrDefault();
+
+            var borrowedBook = (from b in db.Books
+                                where b.Book_ID == finalizedTransaction.Book_ID
+                                select b).FirstOrDefault();
+
+            if (borrowedBook != null)
+            {
+                int tempValue = borrowedBook.Book_Quantity.Value;
+                borrowedBook.Book_Quantity = tempValue + 1;
+            }
+
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error {ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private void finesBTN_Click(object sender, RoutedEventArgs e)

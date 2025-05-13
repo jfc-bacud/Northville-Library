@@ -42,7 +42,6 @@
       <Column Name="Role_ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Role_Name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
       <Association Name="Role_Staff" Member="Staffs" ThisKey="Role_ID" OtherKey="Role_ID" Type="Staff" />
-      <Association Name="Role_Staff1" Member="Staffs1" ThisKey="Role_ID" OtherKey="Role_ID" Type="Staff" />
       <Association Name="Role_Student" Member="Students" ThisKey="Role_ID" OtherKey="Role_ID" Type="Student" />
     </Type>
   </Table>
@@ -56,7 +55,6 @@
       <Column Name="Staff_ContactNum" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Staff_Email" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Role_Staff" Member="Role" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
-      <Association Name="Role_Staff1" Member="Role1" ThisKey="Role_ID" OtherKey="Role_ID" Type="Role" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Student" Member="Students">
