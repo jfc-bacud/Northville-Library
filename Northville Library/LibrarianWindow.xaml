@@ -25,8 +25,9 @@
                 <Label Content="Role: " FontSize="15"/>
                 <Label x:Name="roleLBL" Content="" FontSize="15"/>
             </StackPanel>
-            <Button x:Name="profileBTN" Content="Profile" Width="200" Height="35" Margin="0,0,0,10" Click="profileBTN_Click"/>
             <Button x:Name="booksBTN" Content="Book List" Width="200" Height="35" Margin="0,0,0,10" Click="booksBTN_Click"/>
+            <Button x:Name="transactionBTN" Content="Transactions &amp; Fines" Width="200" Height="35" Margin="0,0,0,10" Click="transactionBTN_Click"/>
+            <Button x:Name="profileBTN" Content="Profile" Width="200" Height="35" Margin="0,0,0,10" Click="profileBTN_Click"/>
             <Button x:Name="logoutBTN" Content="Log Out" Width="200" Height="35" Margin="0,0,0,10" Click="logoutBTN_Click"/>
         </StackPanel>
     </Grid>

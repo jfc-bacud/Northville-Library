@@ -35,8 +35,8 @@ namespace Northville_Library
         }
         public void displayFirstPage()
         {
-            profilePage = new StudentProfile(localstudentUID);
-            pageFrame.Content = profilePage;
+            booksPage = new StudentBooks(localstudentUID);
+            pageFrame.Content = booksPage;
         } // Displays very first page (Profile Page) on Window Startup
         public void retrieveUserInformation()
         {
@@ -59,7 +59,8 @@ namespace Northville_Library
         } // Retrieve User Information for UI displays (labels) at Window
         private void profileBTN_Click(object sender, RoutedEventArgs e)
         {
-            displayFirstPage();
+            profilePage = new StudentProfile(localstudentUID);
+            pageFrame.Content = profilePage;
         } // Navigates to Profile Page
         public void deleteClose()
         {
@@ -89,8 +90,7 @@ namespace Northville_Library
         } // Goes to Transaction Page
         private void booksBTN_Click(object sender, RoutedEventArgs e)
         {
-            booksPage = new StudentBooks(localstudentUID);
-            pageFrame.Content = booksPage;
+            displayFirstPage();
         } // Goes to Books Page
     }
 }

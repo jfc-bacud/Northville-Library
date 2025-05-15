@@ -100,8 +100,14 @@
     <Compile Include="LibrarianWindow Pages\LibrarianBooks.xaml.cs">
       <DependentUpon>LibrarianBooks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LibrarianWindow Pages\LibrarianFines.xaml.cs">
+      <DependentUpon>LibrarianFines.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LibrarianWindow Pages\LibrarianProfile.xaml.cs">
       <DependentUpon>LibrarianProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LibrarianWindow Pages\LibrarianTransactions.xaml.cs">
+      <DependentUpon>LibrarianTransactions.xaml</DependentUpon>
     </Compile>
     <Compile Include="LibrarianWindow.xaml.cs">
       <DependentUpon>LibrarianWindow.xaml</DependentUpon>
@@ -154,7 +160,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LibrarianWindow Pages\LibrarianFines.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LibrarianWindow Pages\LibrarianProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LibrarianWindow Pages\LibrarianTransactions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

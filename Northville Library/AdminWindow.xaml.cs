@@ -60,19 +60,20 @@ namespace Northville_Library
         } // Retrieve User Information for UI displays (labels) at Window
         private void profileBTN_Click(object sender, RoutedEventArgs e)
         {
-            displayFirstPage();
+            profilePage = new AdminProfile(localadminUID);
+            pageFrame.Content = profilePage;
         }
         private void displayFirstPage()
         {
-            profilePage = new AdminProfile(localadminUID);
-            pageFrame.Content = profilePage;
+            transactionPage = new AdminTransaction();
+            pageFrame.Content = transactionPage;
         }
         public void deleteClose()
         {
             MainWindow window = new MainWindow();
             window.Show();
             this.Close();
-        } // Method that closes the window IF user decides to delete their account
+        } 
         private void logoutBTN_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to log out?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -90,8 +91,7 @@ namespace Northville_Library
         }
         private void transactionBTN_Click(object sender, RoutedEventArgs e)
         {
-            transactionPage = new AdminTransaction();
-            pageFrame.Content = transactionPage;
+            displayFirstPage();
         }
         private void stafflistBTN_Click(object sender, RoutedEventArgs e)
         {

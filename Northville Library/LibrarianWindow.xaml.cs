@@ -24,6 +24,8 @@ namespace Northville_Library
         DataClasses1DataContext db;
         LibrarianProfile profilePage;
         LibrarianBooks booksPage;
+        LibrarianTransactions transactionsPage;
+        LibrarianFines finesPage;
 
         private string localLibrarianID;
         public LibrarianWindow(string librarianID)
@@ -54,13 +56,12 @@ namespace Northville_Library
         }
         private void displayFirstPage()
         {
-            profilePage = new LibrarianProfile(localLibrarianID);
-            pageFrame.Content = profilePage;
+            booksPage = new LibrarianBooks();
+            pageFrame.Content = booksPage;
         }
         private void booksBTN_Click(object sender, RoutedEventArgs e)
         {
-            booksPage = new LibrarianBooks();
-            pageFrame.Content = booksPage;
+            displayFirstPage();
         }
         private void logoutBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -79,7 +80,8 @@ namespace Northville_Library
         }
         private void profileBTN_Click(object sender, RoutedEventArgs e)
         {
-            displayFirstPage();
+            profilePage = new LibrarianProfile(localLibrarianID);
+            pageFrame.Content = profilePage;
         }
         public void deleteClose()
         {
@@ -87,5 +89,21 @@ namespace Northville_Library
             window.Show();
             this.Close();
         } // Method that closes the window IF user decides to delete their account
+        private void transactionBTN_Click(object sender, RoutedEventArgs e)
+        {
+            transactionsPage = new LibrarianTransactions();
+            pageFrame.Content = transactionsPage;
+        }
+        public void finesNavToPage()
+        {
+            finesPage = new LibrarianFines();
+            pageFrame.Content = finesPage;
+        }
+        public void transactionNavToPage()
+        {
+            transactionsPage = new LibrarianTransactions();
+            pageFrame.Content = transactionsPage;
+        }
+
     }
 }
