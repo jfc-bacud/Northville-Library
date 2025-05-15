@@ -99,6 +99,7 @@ namespace Northville_Library.StudentWindow_Pages
             db.Transactions.InsertOnSubmit(transaction);
             try
             {
+                MessageBox.Show($"You have borrowed book: {selectedBook.Book_ID}!", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 db.SubmitChanges();
                 LoadBooks();
             }

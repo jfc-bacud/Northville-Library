@@ -196,16 +196,23 @@ namespace Northville_Library.AdminWindow_Pages
         }
         private void deleteBTN_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this course?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            if (!db.Students.Any(s => s.Course_ID == selectedCourse.Course_ID))
             {
-                db.Courses.DeleteOnSubmit(selectedCourse);
-                db.SubmitChanges();
-                MessageBox.Show($"Deleted Course: {selectedCourseID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this course?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                LoadCourses();
-                courseDataGrid.UnselectAll();
+                if (result == MessageBoxResult.Yes)
+                {
+                    db.Courses.DeleteOnSubmit(selectedCourse);
+                    db.SubmitChanges();
+                    MessageBox.Show($"Deleted Course: {selectedCourseID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    LoadCourses();
+                    courseDataGrid.UnselectAll();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Cannot delete {selectedCourseID} because it is in use!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -246,16 +246,23 @@ namespace Northville_Library.LibrarianWindow_Pages
         } // Error Checking
         private void deleteBTN_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this book?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            if (!db.Transactions.Any(t => t.Book_ID == selectedBook.Book_ID))
             {
-                db.Books.DeleteOnSubmit(selectedBook);
-                db.SubmitChanges();
-                MessageBox.Show($"Deleted Book: {selectedBookID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this book?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                LoadBooks();
-                bookDataGrid.UnselectAll();
+                if (result == MessageBoxResult.Yes)
+                {
+                    db.Books.DeleteOnSubmit(selectedBook);
+                    db.SubmitChanges();
+                    MessageBox.Show($"Deleted Book: {selectedBookID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    LoadBooks();
+                    bookDataGrid.UnselectAll();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Cannot delete {selectedBookID} as it is in use!", "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void deselectBTN_Click(object sender, RoutedEventArgs e)

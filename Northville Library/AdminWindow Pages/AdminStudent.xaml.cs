@@ -260,17 +260,25 @@ namespace Northville_Library.AdminWindow_Pages
         }
         private void deleteBTN_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this account?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            if (!db.Transactions.Any(s => s.Student_ID == selectedStudent.Student_ID))
             {
-                db.Students.DeleteOnSubmit(selectedStudent);
-                db.SubmitChanges();
-                MessageBox.Show($"Deleted User: {selectedstudentID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this account?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                LoadStudent();
-                studentDataGrid.UnselectAll();
+                if (result == MessageBoxResult.Yes)
+                {
+                    db.Students.DeleteOnSubmit(selectedStudent);
+                    db.SubmitChanges();
+                    MessageBox.Show($"Deleted User: {selectedstudentID}", "Status Message", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    LoadStudent();
+                    studentDataGrid.UnselectAll();
+                }
             }
+            else
+            {
+                MessageBox.Show($"Cannot delete user: {selectedstudentID} as they have an existing record!", "Error Message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
     }
